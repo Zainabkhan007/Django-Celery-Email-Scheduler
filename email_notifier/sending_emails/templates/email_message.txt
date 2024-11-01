@@ -1,0 +1,8 @@
+{% comment %} Here we write the body of the email {% endcomment %}
+
+Hello {{name|safe}}
+Here is a copy of your review:
+{{reviews|safe}}
+
+
+Thankyou!

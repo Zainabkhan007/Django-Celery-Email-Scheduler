@@ -1,0 +1,37 @@
+services:
+  
+  django:
+    build:
+      context: .
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: my_django_container
+    volumes:
+      - .:/email_notifier
+      - ./data/db:/root/db  # Mounting SQLite database directory
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,[::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis  # Only depends on Redis
+
+  celery:
+    build:
+      context: .
+    command: celery -A email_notifier worker -l info --pool=solo
+    volumes:
+      - .:/email_notifier
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,[::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - django
+      - redis
+
+  redis:
+    image: "redis:alpine"

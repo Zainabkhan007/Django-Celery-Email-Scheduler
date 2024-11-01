@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block css %}
+
+
+<style>
+    .login,
+    .image {
+        min-height: 100vh;
+    }
+
+    .bg-image {
+        {% comment %} background-image: url('images\one.jpg'); {% endcomment %}
+        background-size: cover;
+        background-position: center center;
+        height: 729px;
+        margin-top: 61px;
+    }
+
+    .container-fluid {
+        max-width: 100%;
+    }
+
+    .account-form input {
+        border: 2px solid #ccc;
+        height: calc(2em + .75rem + 2px);
+    }
+
+    .account-form input:focus {
+        border-color: #1497ff;
+        box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075), 0 0 0px rgba(255, 0, 0, 0.6);
+    }
+    .mb-3 {
+        margin-bottom: 1rem !important;
+        margin-top: 9px;
+        height: 57px;
+        background-color: #f4f5f5;
+        
+    }
+    label {
+        
+        font-size: 25px;
+        font-family: math;
+    }    
+    textarea.form-control {
+        
+        background-color: #f4f5f5;
+    }
+    .mt-5 {
+        margin-top: 2rem !important;
+       
+        margin-left: 133px;
+        width: 175px;
+        height: 55px;
+       
+        font-size: 27px;
+      
+    }
+    
+</style>
+
+{% endblock css %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="col-md-6 ">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8 col-md-8  mx-auto">
+                            <p class="h1 mb-4 font-weight-bold">Write a review</p>
+                            <form class="mx-3" action="{% url 'reviews' %}" method="post">{% csrf_token %}
+                                {{ form.as_p }}
+                                <button class="btn btn-dark btn-block py-2 mb-4 mt-5 font-weight-bold"
+                                    type="submit" value="Log-in">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 d-none d-md-flex bg-image">
+            <img  src="\static\images\one.jpg">
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock body %}
